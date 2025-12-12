@@ -1,7 +1,12 @@
 import boto3
 import os
+import logging
 from botocore.config import Config
 from typing import BinaryIO
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 
 class R2Storage:
@@ -43,9 +48,10 @@ class R2Storage:
         """
         try:
             self.s3_client.upload_fileobj(file_obj, self.bucket_name, filename)
+            logger.info(f"Successfully uploaded file: {filename}")
             return True
         except Exception as e:
-            print(f"Error uploading file: {e}")
+            logger.error(f"Error uploading file {filename}: {e}")
             return False
 
     def get_presigned_url(self, filename: str, expiration: int = 3600) -> str:
@@ -65,7 +71,8 @@ class R2Storage:
                 Params={'Bucket': self.bucket_name, 'Key': filename},
                 ExpiresIn=expiration
             )
+            logger.debug(f"Generated presigned URL for file: {filename}")
             return url
         except Exception as e:
-            print(f"Error generating presigned URL: {e}")
+            logger.error(f"Error generating presigned URL for {filename}: {e}")
             return ""
