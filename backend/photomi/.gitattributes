@@ -1,0 +1,31 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# Python specific
+*.py text
+
+# Markdown
+*.md text
+
+# YAML
+*.yaml text
+*.yml text
+
+# JSON
+*.json text
+
+# Configuration files
+*.env text
+*.toml text
+*.ini text
+
+# Shell scripts
+*.sh text eol=lf
+*.bash text eol=lf
+
+# Batch files
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Database files
+*.db binary
